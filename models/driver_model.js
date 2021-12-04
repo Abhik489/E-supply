@@ -8,7 +8,7 @@ getDriverById:function(id,callback){
     return db.query("select * from driver_tbl where driver_id=?",[id],callback);
 },
 addDriver:function(item,callback){
-    return db.query("insert into driver_tbl values(?,?,?,?)",[item.licenseno,item.name,item.mobile_no,item.address],callback);
+    return db.query("insert into driver_tbl(licenseno, name, mobile_no, address, password, driver_status) values(?,?,?,?,'password','available')",[item.licenseno,item.name,item.mobile_no,item.address],callback);
 },
 removeDriver:function(id,callback){
     return db.query("delete from driver_tbl where mobile_no=?",[id],callback);

@@ -16,14 +16,26 @@ getPendingOrdersForToday:function(callback){
     let dt = new Date();
     let dtstring = dt.getFullYear()
     + '-' + pad2(dt.getMonth()+1)
-    + '-' + pad2(dt.getDate());
-    return db.query("select * from order_tbl join user_tbl on order_tbl.fk_email_id = user_tbl.email_id where order_status IN ('Pending','Pending (Repeating)') and order_delivery_date=?",[dtstring],callback);
+    + '-' + pad2(dt.getDate())
+    + ' ' + pad2(dt.getHours())
+    + ':'+ pad2(dt.getMinutes())
+    +':' + pad2(dt.getSeconds());
+
+    let endTime = dt.getFullYear()
+    + '-' + pad2(dt.getMonth()+1)
+    + '-' + pad2(dt.getDate())
+    + ' 23:59:00';
+
+    return db.query("select * from order_tbl join user_tbl on order_tbl.fk_email_id = user_tbl.email_id where order_status IN ('Pending','Pending (Repeating)') and order_delivery_date>? AND order_delivery_date<?",[dtstring,endTime],callback);
 },
 getMissedPendingOrders:function(callback){
     let dt = new Date();
     let dtstring = dt.getFullYear()
     + '-' + pad2(dt.getMonth()+1)
-    + '-' + pad2(dt.getDate());
+    + '-' + pad2(dt.getDate())
+    + ' ' + pad2(dt.getHours())
+    + ':'+ pad2(dt.getMinutes())
+    +':' + pad2(dt.getSeconds());
     return db.query("select * from order_tbl join user_tbl on order_tbl.fk_email_id = user_tbl.email_id where order_status IN ('Pending','Pending (Repeating)')  and order_delivery_date<?",[dtstring],callback);
 },
 getAssignedOrders:function(callback){

@@ -41,8 +41,27 @@
             f.action="/confirmation?_method=POST";
         }
     }
+    
+    function setMinDelDate(){
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
 
-    // window.onload=function(){grayer('f_1',false);}; // disabled by default
+        var h=today.getHours()+1;
+        var m=today.getMinutes();
+    
+        if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            } 
+
+        today = yyyy+'-'+mm+'-'+dd+' '+h+':'+m;
+        document.getElementById("delivery_date").setAttribute("min", today);
+    }
+    window.onload=function(){setMinDelDate();}; // disabled by default
 </script>
 
 <!-- <style type="text/css">
@@ -94,7 +113,7 @@
                     </div>
                     <div style="margin-bottom: 5px;">
                         <h6 style="display: inline;">Delivery Date:&emsp;</h6>
-                        <input type="date" name="delivery_date" required/>
+                        <input type="datetime-local" id="delivery_date" name="delivery_date" required/>
                     </div>
                     <!-- <div style="margin-bottom: 5px;">
                         <h6 style="display: inline;">Is this scheduled order?  </h6>
@@ -137,7 +156,7 @@
 
                                 <div class="col-md-12 form-group">
                                     <label for="zip" style="font-weight: 500;">Postcode/ZIP</label>
-                                    <input type="text" class="form-control" name="zip" placeholder="Postcode/ZIP" required>
+                                    <input type="text" class="form-control" name="zip" placeholder="Postcode/ZIP" maxlength="6" minlength="6" required>
                                 </div>
 
                             <!-- </form> -->
